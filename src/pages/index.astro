@@ -8,7 +8,6 @@ import IntroQuote from "../components/IntroQuote.astro";
   <Nav />
   <IntroQuote />
   <main class="page-content">
-    <!-- Hero Section -->
     <section class="hero">
       <div class="hero-particles">
         {[...Array(20)].map(() => (
@@ -17,7 +16,9 @@ import IntroQuote from "../components/IntroQuote.astro";
       </div>
 
       <div class="hero-content">
-        <div class="hero-badge">Roy✦al Violet</div>
+        <div class="hero-avatar">
+          <img src="/profile.jpg" alt="عادل سادات" class="hero-avatar-img" />
+        </div>
         <h1 class="hero-title">
           <span class="title-line">سلام، من</span>
           <span class="title-name">عادل سادات</span>
@@ -46,7 +47,6 @@ import IntroQuote from "../components/IntroQuote.astro";
       </div>
     </section>
 
-    <!-- Features Section -->
     <section class="features">
       <div class="section-container">
         <h2 class="section-title">چرا اینجا هستید؟</h2>
@@ -75,7 +75,6 @@ import IntroQuote from "../components/IntroQuote.astro";
       </div>
     </section>
 
-    <!-- Quote Section -->
     <section class="quote-section">
       <div class="section-container">
         <div class="quote-card">
@@ -89,7 +88,6 @@ import IntroQuote from "../components/IntroQuote.astro";
     </section>
   </main>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="footer-content">
       <p>ساخته شده با 💜 توسط عادل سادات</p>
@@ -99,7 +97,6 @@ import IntroQuote from "../components/IntroQuote.astro";
 </Layout>
 
 <style>
-  /* Hero */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -160,16 +157,25 @@ import IntroQuote from "../components/IntroQuote.astro";
     max-width: 800px;
   }
 
-  .hero-badge {
-    display: inline-block;
-    padding: 0.4rem 1.2rem;
-    border: 1px solid var(--color-violet);
-    border-radius: 50px;
-    font-size: 0.85rem;
-    color: var(--color-violet-light);
+  .hero-avatar {
     margin-bottom: 2rem;
-    letter-spacing: 2px;
-    background: var(--color-card);
+    display: inline-block;
+    position: relative;
+  }
+
+  .hero-avatar-img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--color-violet-light);
+    box-shadow: 0 0 30px rgba(147, 3, 197, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hero-avatar-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(147, 3, 197, 0.5);
   }
 
   .hero-title {
@@ -290,7 +296,6 @@ import IntroQuote from "../components/IntroQuote.astro";
     50% { transform: translateY(8px); }
   }
 
-  /* Features */
   .features {
     padding: 6rem 2rem;
   }
@@ -379,7 +384,6 @@ import IntroQuote from "../components/IntroQuote.astro";
     transform: translateX(-8px);
   }
 
-  /* Quote */
   .quote-section {
     padding: 4rem 2rem 6rem;
   }
@@ -419,7 +423,6 @@ import IntroQuote from "../components/IntroQuote.astro";
     font-size: 0.95rem;
   }
 
-  /* Footer */
   .footer {
     text-align: center;
     padding: 2rem;
