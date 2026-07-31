@@ -1,0 +1,280 @@
+---
+import { quotes } from "../data/quotes.js";
+---
+
+<div id="intro-quotes-data" style="display:none" data-quotes={JSON.stringify(quotes)}></div>
+
+<div class="intro-quote" id="intro-quote" role="dialog" aria-label="نقل‌قول ادبی" aria-hidden="true">
+  <div class="intro-quote__content">
+    <p class="intro-quote__text" id="intro-quote-text"></p>
+    <p class="intro-quote__author" id="intro-quote-author"></p>
+  </div>
+  <button class="intro-quote__skip" id="intro-quote-skip" aria-label="رد شدن از صفحه معرفی">
+    رد شدن
+  </button>
+</div>
+
+<script is:inline>
+(function() {
+  var introEl = document.getElementById("intro-quote");
+  var textEl = document.getElementById("intro-quote-text");
+  var authorEl = document.getElementById("intro-quote-author");
+  var skipBtn = document.getElementById("intro-quote-skip");
+  var dataEl = document.getElementById("intro-quotes-data");
+
+  if (!introEl || !textEl || !authorEl || !skipBtn || !dataEl) return;
+
+  function cleanup() {
+    if (introEl && introEl.parentNode) introEl.remove();
+    if (dataEl && dataEl.parentNode) dataEl.remove();
+  }
+
+  var shouldShow = true;
+  try {
+    if (sessionStorage.getItem("writer-site-intro-seen") === "true") {
+      shouldShow = false;
+    }
+  } catch(e) {}
+
+  if (!shouldShow) {
+    cleanup();
+    return;
+  }
+
+  var quotes = [];
+  try {
+    quotes = JSON.parse(dataEl.getAttribute("data-quotes") || "[]");
+  } catch(e) {}
+
+  if (!quotes || quotes.length === 0) {
+    cleanup();
+    return;
+  }
+
+  var selectedIndex = 0;
+  try {
+    var lastIndex = localStorage.getItem("writer-site-last-quote-index");
+    if (lastIndex !== null) {
+      lastIndex = parseInt(lastIndex, 10);
+      if (isNaN(lastIndex)) lastIndex = -1;
+    } else {
+      lastIndex = -1;
+    }
+
+    if (quotes.length === 1) {
+      selectedIndex = 0;
+    } else {
+      selectedIndex = Math.floor(Math.random() * quotes.length);
+      var attempts = 0;
+      while (selectedIndex === lastIndex && attempts < 20) {
+        selectedIndex = Math.floor(Math.random() * quotes.length);
+        attempts++;
+      }
+    }
+
+    try {
+      localStorage.setItem("writer-site-last-quote-index", String(selectedIndex));
+    } catch(e) {}
+  } catch(e) {
+    selectedIndex = Math.floor(Math.random() * quotes.length);
+  }
+
+  var quote = quotes[selectedIndex];
+  textEl.textContent = quote.text;
+  authorEl.textContent = "\u2014 " + quote.author;
+
+  var previousOverflow = document.body.style.overflow;
+  document.body.style.overflow = "hidden";
+
+  introEl.setAttribute("aria-hidden", "false");
+
+  var prefersReducedMotion = false;
+  try {
+    prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch(e) {}
+
+  var isClosing = false;
+  var autoTimer = null;
+
+  function closeIntro() {
+    if (isClosing) return;
+    isClosing = true;
+
+    if (autoTimer) {
+      clearTimeout(autoTimer);
+      autoTimer = null;
+    }
+
+    introEl.classList.add("intro-quote--leaving");
+
+    try {
+      sessionStorage.setItem("writer-site-intro-seen", "true");
+    } catch(e) {}
+
+    var removeDelay = prefersReducedMotion ? 100 : 700;
+
+    setTimeout(function() {
+      document.body.style.overflow = previousOverflow || "";
+      cleanup();
+    }, removeDelay);
+  }
+
+  skipBtn.addEventListener("click", closeIntro);
+
+  if (prefersReducedMotion) {
+    introEl.classList.add("intro-quote--visible");
+    autoTimer = setTimeout(closeIntro, 2500);
+  } else {
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        introEl.classList.add("intro-quote--visible");
+      });
+    });
+    autoTimer = setTimeout(closeIntro, 4000);
+  }
+})();
+</script>
+
+<style>
+  .intro-quote {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: var(--color-dark);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.7s ease;
+  }
+
+  .intro-quote--visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .intro-quote--leaving {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.7s ease;
+  }
+
+  .intro-quote__content {
+    text-align: center;
+    max-width: 600px;
+    padding: 2rem;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+  }
+
+  .intro-quote--visible .intro-quote__content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .intro-quote--leaving .intro-quote__content {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .intro-quote__text {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 500;
+    line-height: 2;
+    color: var(--color-white);
+    margin-bottom: 1.2rem;
+    direction: rtl;
+  }
+
+  .intro-quote__author {
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    color: var(--color-violet-light);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s;
+    direction: rtl;
+  }
+
+  .intro-quote--visible .intro-quote__author {
+    opacity: 0.7;
+    transform: translateY(0);
+  }
+
+  .intro-quote--leaving .intro-quote__author {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .intro-quote__skip {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    background: transparent;
+    border: 1px solid var(--color-card-border);
+    color: var(--color-gray);
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    font-family: var(--font-main);
+    font-size: 0.85rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.8s, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .intro-quote--visible .intro-quote__skip {
+    opacity: 1;
+  }
+
+  .intro-quote--leaving .intro-quote__skip {
+    opacity: 0 !important;
+    transition: opacity 0.2s ease;
+  }
+
+  .intro-quote__skip:hover {
+    color: var(--color-white);
+    border-color: var(--color-violet);
+  }
+
+  .intro-quote__skip:focus {
+    outline: 2px solid var(--color-violet);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .intro-quote {
+      transition: opacity 0.1s ease;
+    }
+    .intro-quote__content {
+      transform: none;
+      transition: opacity 0.1s ease;
+    }
+    .intro-quote__author {
+      transform: none;
+      transition: opacity 0.1s ease;
+    }
+    .intro-quote--leaving {
+      transition: opacity 0.1s ease;
+    }
+    .intro-quote--leaving .intro-quote__content {
+      transition: opacity 0.1s ease;
+    }
+    .intro-quote--leaving .intro-quote__author {
+      transition: opacity 0.1s ease;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .intro-quote__content {
+      padding: 1.5rem;
+    }
+    .intro-quote__skip {
+      bottom: 1.5rem;
+      left: 1.5rem;
+    }
+  }
+</style>
