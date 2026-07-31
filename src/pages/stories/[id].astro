@@ -1,0 +1,234 @@
+---
+import { stories } from "../../data/stories.js";
+import Layout from "../../layouts/Layout.astro";
+import Nav from "../../components/Nav.astro";
+
+export function getStaticPaths() {
+  return stories.map(function(story) {
+    return {
+      params: { id: String(story.id) },
+      props: { story: story }
+    };
+  });
+}
+
+var story = Astro.props.story;
+
+var currentIndex = stories.findIndex(function(s) { return s.id === story.id; });
+var prevStory = currentIndex > 0 ? stories[currentIndex - 1] : null;
+var nextStory = currentIndex < stories.length - 1 ? stories[currentIndex + 1] : null;
+---
+
+<Layout title={story.title}>
+  <Nav />
+  <main class="page-content">
+    <article class="story-page">
+      <a href="/story" class="story-back">← بازگشت به داستان‌ها</a>
+
+      <header class="story-header">
+        <div class="story-number">داستان {String(story.id).padStart(2, '۰')}</div>
+        <h1 class="story-title">{story.title}</h1>
+        <div class="story-meta">
+          <span class="story-date">📅 {story.date}</span>
+          <span class="story-read">⏱ {story.readTime}</span>
+        </div>
+        <div class="story-tags">
+          {story.tags.map(function(tag) {
+            return <span class="story-tag">{tag}</span>;
+          })}
+        </div>
+      </header>
+
+      <div class="story-body">
+        {story.content.split('\n\n').map(function(paragraph) {
+          return <p>{paragraph}</p>;
+        })}
+      </div>
+
+      <nav class="story-nav">
+        {prevStory ? (
+          <a href={"/stories/" + prevStory.id} class="story-nav-link story-nav-prev">
+            <span class="story-nav-label">← داستان قبلی</span>
+            <span class="story-nav-title">{prevStory.title}</span>
+          </a>
+        ) : (
+          <div></div>
+        )}
+        {nextStory ? (
+          <a href={"/stories/" + nextStory.id} class="story-nav-link story-nav-next">
+            <span class="story-nav-label">داستان بعدی →</span>
+            <span class="story-nav-title">{nextStory.title}</span>
+          </a>
+        ) : (
+          <div></div>
+        )}
+      </nav>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <p>ساخته شده با 💜 توسط عادل سادات</p>
+  </footer>
+</Layout>
+
+<style>
+  .story-page {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 120px 2rem 4rem;
+  }
+
+  .story-back {
+    display: inline-block;
+    color: var(--color-violet-light);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    transition: color 0.3s ease;
+  }
+
+  .story-back:hover {
+    color: var(--color-white);
+  }
+
+  .story-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-card-border);
+  }
+
+  .story-number {
+    font-size: 0.9rem;
+    color: var(--color-violet);
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  .story-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    color: var(--color-white);
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+  }
+
+  .story-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .story-date,
+  .story-read {
+    color: var(--color-gray);
+    font-size: 0.9rem;
+  }
+
+  .story-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .story-tag {
+    padding: 0.25rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    color: var(--color-violet-light);
+    background: var(--color-card);
+    border: 1px solid var(--color-card-border);
+  }
+
+  .story-body {
+    line-height: 2.2;
+    font-size: 1.1rem;
+    color: #D0D0E0;
+  }
+
+  .story-body p {
+    margin-bottom: 1.5rem;
+    text-indent: 1.5rem;
+  }
+
+  .story-body p:first-child {
+    text-indent: 0;
+  }
+
+  .story-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-card-border);
+  }
+
+  .story-nav-link {
+    background: var(--gradient-card);
+    border: 1px solid var(--color-card-border);
+    border-radius: 16px;
+    padding: 1.2rem;
+    transition: all 0.3s ease;
+    max-width: 45%;
+  }
+
+  .story-nav-link:hover {
+    border-color: var(--color-violet);
+    transform: translateY(-3px);
+  }
+
+  .story-nav-next {
+    text-align: left;
+  }
+
+  .story-nav-prev {
+    text-align: right;
+  }
+
+  .story-nav-label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-violet-light);
+    margin-bottom: 0.3rem;
+  }
+
+  .story-nav-title {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--color-white);
+    font-weight: 600;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--color-card-border);
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer p {
+    color: var(--color-gray);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 640px) {
+    .story-nav {
+      flex-direction: column;
+    }
+
+    .story-nav-link {
+      max-width: 100%;
+    }
+
+    .story-nav-next {
+      text-align: right;
+    }
+
+    .story-body {
+      font-size: 1rem;
+    }
+  }
+</style>
