@@ -1,0 +1,107 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "وبسایت شخصی عادل سادات" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} | عادل سادات</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --color-dark: #02060E;
+    --color-violet: #9303C5;
+    --color-violet-light: #B44DDB;
+    --color-violet-dark: #6B0290;
+    --color-white: #FFFFFF;
+    --color-gray: #A0A0B0;
+    --color-card: rgba(147, 3, 197, 0.08);
+    --color-card-border: rgba(147, 3, 197, 0.2);
+    --gradient-main: linear-gradient(135deg, #02060E 0%, #1a0433 40%, #9303C5 100%);
+    --gradient-text: linear-gradient(135deg, #B44DDB, #9303C5, #6B0290);
+    --gradient-button: linear-gradient(135deg, #9303C5, #6B0290);
+    --gradient-card: linear-gradient(135deg, rgba(147, 3, 197, 0.1), rgba(2, 6, 14, 0.8));
+    --font-main: 'Vazirmatn', sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-main);
+    background: var(--color-dark);
+    color: var(--color-white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(147, 3, 197, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(107, 2, 144, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(147, 3, 197, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  ::selection {
+    background: var(--color-violet);
+    color: var(--color-white);
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-dark);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-violet);
+    border-radius: 4px;
+  }
+
+  .page-content {
+    position: relative;
+    z-index: 1;
+  }
+</style>

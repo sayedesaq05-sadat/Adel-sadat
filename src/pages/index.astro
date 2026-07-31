@@ -1,17 +1,460 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="خانه">
+  <Nav />
+  <main class="page-content">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-particles">
+        {[...Array(20)].map(() => (
+          <div class="particle"></div>
+        ))}
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-badge">Roy✦al Violet</div>
+        <h1 class="hero-title">
+          <span class="title-line">سلام، من</span>
+          <span class="title-name">عادل سادات</span>
+          <span class="title-line">هستم</span>
+        </h1>
+        <p class="hero-subtitle">
+          خوش آمدید به دنیای من — جایی که داستان، احساس و خلاقیت به هم می‌رسند
+        </p>
+        <div class="hero-buttons">
+          <a href="/story" class="btn btn-primary">
+            <span>📖</span>
+            داستان من را بخوانید
+          </a>
+          <a href="/contact" class="btn btn-secondary">
+            <span>✉️</span>
+            با من در ارتباط باشید
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-scroll">
+        <div class="scroll-indicator">
+          <div class="scroll-dot"></div>
+        </div>
+        <span>اسکرول کنید</span>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+      <div class="section-container">
+        <h2 class="section-title">چرا اینجا هستید؟</h2>
+        <div class="features-grid">
+          <a href="/about" class="feature-card">
+            <div class="feature-icon">👤</div>
+            <h3>درباره من</h3>
+            <p>بیشتر با من آشنا شوید و بدانید چه کسی هستم</p>
+            <span class="feature-arrow">←</span>
+          </a>
+
+          <a href="/story" class="feature-card">
+            <div class="feature-icon">📖</div>
+            <h3>داستان</h3>
+            <p>داستان‌ها و تجربیات زندگی من را بخوانید</p>
+            <span class="feature-arrow">←</span>
+          </a>
+
+          <a href="/contact" class="feature-card">
+            <div class="feature-icon">✉️</div>
+            <h3>ارتباط با من</h3>
+            <p>سوال دارید؟ پیام بدهید، در خدمت شما هستم</p>
+            <span class="feature-arrow">←</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quote Section -->
+    <section class="quote-section">
+      <div class="section-container">
+        <div class="quote-card">
+          <div class="quote-mark">❝</div>
+          <blockquote>
+            هر داستانی که گفته شود، بخشی از حقیقتی است که در دل ما زندگی می‌کند
+          </blockquote>
+          <cite>— عادل سادات</cite>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>ساخته شده با 💜 توسط عادل سادات</p>
+      <p class="footer-sub">Royal Violet © 2025</p>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--color-violet);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: float 8s infinite ease-in-out;
+  }
+
+  .particle:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; animation-duration: 7s; }
+  .particle:nth-child(2) { top: 30%; left: 70%; animation-delay: 1s; animation-duration: 9s; }
+  .particle:nth-child(3) { top: 50%; left: 40%; animation-delay: 2s; animation-duration: 6s; }
+  .particle:nth-child(4) { top: 70%; left: 80%; animation-delay: 0.5s; animation-duration: 8s; }
+  .particle:nth-child(5) { top: 20%; left: 50%; animation-delay: 3s; animation-duration: 10s; }
+  .particle:nth-child(6) { top: 80%; left: 30%; animation-delay: 1.5s; animation-duration: 7s; }
+  .particle:nth-child(7) { top: 40%; left: 10%; animation-delay: 2.5s; animation-duration: 9s; }
+  .particle:nth-child(8) { top: 60%; left: 60%; animation-delay: 0.8s; animation-duration: 6s; }
+  .particle:nth-child(9) { top: 15%; left: 85%; animation-delay: 3.5s; animation-duration: 8s; }
+  .particle:nth-child(10) { top: 90%; left: 45%; animation-delay: 1.2s; animation-duration: 10s; }
+  .particle:nth-child(11) { top: 25%; left: 35%; animation-delay: 0.3s; animation-duration: 7s; }
+  .particle:nth-child(12) { top: 55%; left: 90%; animation-delay: 2.2s; animation-duration: 9s; }
+  .particle:nth-child(13) { top: 75%; left: 15%; animation-delay: 1.8s; animation-duration: 6s; }
+  .particle:nth-child(14) { top: 35%; left: 55%; animation-delay: 0.7s; animation-duration: 8s; }
+  .particle:nth-child(15) { top: 85%; left: 65%; animation-delay: 2.8s; animation-duration: 10s; }
+  .particle:nth-child(16) { top: 5%; left: 75%; animation-delay: 1.3s; animation-duration: 7s; }
+  .particle:nth-child(17) { top: 45%; left: 25%; animation-delay: 3.2s; animation-duration: 9s; }
+  .particle:nth-child(18) { top: 65%; left: 50%; animation-delay: 0.1s; animation-duration: 6s; }
+  .particle:nth-child(19) { top: 95%; left: 80%; animation-delay: 2.6s; animation-duration: 8s; }
+  .particle:nth-child(20) { top: 10%; left: 5%; animation-delay: 1.9s; animation-duration: 10s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+    50% { transform: translateY(-30px) scale(1.5); opacity: 0.6; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    border: 1px solid var(--color-violet);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    color: var(--color-violet-light);
+    margin-bottom: 2rem;
+    letter-spacing: 2px;
+    background: var(--color-card);
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+  }
+
+  .title-line {
+    display: block;
+    color: var(--color-white);
+    font-weight: 300;
+    font-size: 0.6em;
+  }
+
+  .title-name {
+    display: block;
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.2em;
+    font-weight: 900;
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--color-gray);
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 2rem;
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: var(--font-main);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--gradient-button);
+    color: var(--color-white);
+    box-shadow: 0 4px 20px rgba(147, 3, 197, 0.4);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(147, 3, 197, 0.6);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-violet-light);
+    border: 1px solid var(--color-card-border);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-card);
+    border-color: var(--color-violet);
+    transform: translateY(-3px);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-gray);
+    font-size: 0.8rem;
+    animation: bounce 2s infinite;
+  }
+
+  .scroll-indicator {
+    width: 24px;
+    height: 40px;
+    border: 2px solid var(--color-card-border);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+  }
+
+  .scroll-dot {
+    width: 4px;
+    height: 8px;
+    background: var(--color-violet);
+    border-radius: 2px;
+    animation: scrollDot 2s infinite;
+  }
+
+  @keyframes scrollDot {
+    0%, 100% { opacity: 1; transform: translateY(0); }
+    50% { opacity: 0.3; transform: translateY(10px); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+
+  /* Features */
+  .features {
+    padding: 6rem 2rem;
+  }
+
+  .section-container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 3rem;
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .feature-card {
+    background: var(--gradient-card);
+    border: 1px solid var(--color-card-border);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-button);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--color-violet);
+    box-shadow: 0 10px 40px rgba(147, 3, 197, 0.2);
+  }
+
+  .feature-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .feature-card h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--color-white);
+  }
+
+  .feature-card p {
+    color: var(--color-gray);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .feature-arrow {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--color-violet-light);
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+  }
+
+  .feature-card:hover .feature-arrow {
+    transform: translateX(-8px);
+  }
+
+  /* Quote */
+  .quote-section {
+    padding: 4rem 2rem 6rem;
+  }
+
+  .quote-card {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 3rem;
+    background: var(--gradient-card);
+    border: 1px solid var(--color-card-border);
+    border-radius: 24px;
+    position: relative;
+  }
+
+  .quote-mark {
+    font-size: 4rem;
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .quote-card blockquote {
+    font-size: 1.3rem;
+    font-weight: 500;
+    line-height: 2;
+    color: var(--color-white);
+    margin-bottom: 1.5rem;
+  }
+
+  .quote-card cite {
+    color: var(--color-violet-light);
+    font-style: normal;
+    font-size: 0.95rem;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--color-card-border);
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-content p {
+    color: var(--color-gray);
+    font-size: 0.9rem;
+  }
+
+  .footer-sub {
+    font-size: 0.8rem !important;
+    margin-top: 0.3rem;
+    color: var(--color-violet-dark) !important;
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding: 120px 1.5rem 2rem;
+    }
+
+    .hero-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+      max-width: 300px;
+    }
+
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,334 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+---
+
+<Layout title="داستان">
+  <Nav />
+  <main class="page-content">
+    <section class="story-hero">
+      <div class="story-container">
+        <div class="story-badge">📖</div>
+        <h1 class="story-title">داستان</h1>
+        <p class="story-subtitle">
+          داستان‌هایی از زندگی، احساس و تجربه — هر کدام آینه‌ای از واقعیت
+        </p>
+      </div>
+    </section>
+
+    <section class="stories">
+      <div class="stories-container">
+        <div class="story-card">
+          <div class="story-number">۰۱</div>
+          <div class="story-content">
+            <h3>فصل اول: آغاز</h3>
+            <p>
+              در کوچه‌های باریک شهر، جایی که صدای باد با دیوارهای قدیمی هم‌صدا می‌شد،
+              داستان من شروع شد. کودکی که با چشم‌های پر از سوال به دنیا نگاه می‌کرد،
+              و هر روز یک ماجرای جدید داشت.
+            </p>
+            <div class="story-meta">
+              <span class="story-tag">خاطرات</span>
+              <span class="story-tag">کودکی</span>
+            </div>
+          </div>
+          <div class="story-visual">
+            <div class="visual-circle"></div>
+          </div>
+        </div>
+
+        <div class="story-card reverse">
+          <div class="story-number">۰۲</div>
+          <div class="story-content">
+            <h3>فصل دوم: رشد</h3>
+            <p>
+              سال‌ها گذشت و آن کودک بزرگ شد. با هر شکست، قوی‌تر شد.
+              با هر پیروزی، فروتن‌تر. آموخت که زندگی نه همیشه خوشبختی است،
+              نه همیشه غم. بلکه ترکیبی است از هر دو.
+            </p>
+            <div class="story-meta">
+              <span class="story-tag">رشد</span>
+              <span class="story-tag">تجربه</span>
+            </div>
+          </div>
+          <div class="story-visual">
+            <div class="visual-circle"></div>
+          </div>
+        </div>
+
+        <div class="story-card">
+          <div class="story-number">۰۳</div>
+          <div class="story-content">
+            <h3>فصل سوم: کشف</h3>
+            <p>
+              یک روز فهمید که بزرگ‌ترین کشف، شناخت خود است.
+              در آینه نگاه کرد و دیگر از آنچه دید نترسید.
+              چون فهمید هر زخمی، هر خطی، داستانی دارد.
+            </p>
+            <div class="story-meta">
+              <span class="story-tag">خودشناسی</span>
+              <span class="story-tag">کشف</span>
+            </div>
+          </div>
+          <div class="story-visual">
+            <div class="visual-circle"></div>
+          </div>
+        </div>
+
+        <div class="story-card reverse">
+          <div class="story-number">۰۴</div>
+          <div class="story-content">
+            <h3>فصل چهارم: امروز</h3>
+            <p>
+              و امروز اینجا ایستاده‌ام. نه کامل، نه بی‌نقص،
+              اما واقعی. با داستانی که هنوز تمام نشده.
+              و این زیباییِ ناتمام بودن است که زندگی را ارزشمند می‌کند.
+            </p>
+            <div class="story-meta">
+              <span class="story-tag">حال</span>
+              <span class="story-tag">امید</span>
+            </div>
+          </div>
+          <div class="story-visual">
+            <div class="visual-circle"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="story-cta">
+      <div class="cta-container">
+        <h2>داستان شما چیست؟</h2>
+        <p>هر انسانی داستان خودش را دارد. داستان شما را بشنوم</p>
+        <a href="/contact" class="cta-btn">بگوید داستانم را ✦</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>ساخته شده با 💜 توسط عادل سادات</p>
+  </footer>
+</Layout>
+
+<style>
+  .story-hero {
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 2rem 3rem;
+  }
+
+  .story-container {
+    max-width: 600px;
+  }
+
+  .story-badge {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .story-title {
+    font-size: 3rem;
+    font-weight: 900;
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+  }
+
+  .story-subtitle {
+    color: var(--color-gray);
+    font-size: 1.15rem;
+    line-height: 1.9;
+  }
+
+  .stories {
+    padding: 2rem 2rem 4rem;
+  }
+
+  .stories-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .story-card {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    background: var(--gradient-card);
+    border: 1px solid var(--color-card-border);
+    border-radius: 24px;
+    padding: 2.5rem;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .story-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-button);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  .story-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-violet);
+    box-shadow: 0 10px 40px rgba(147, 3, 197, 0.15);
+  }
+
+  .story-card:hover::after {
+    transform: scaleX(1);
+  }
+
+  .story-number {
+    font-size: 3rem;
+    font-weight: 900;
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    flex-shrink: 0;
+    min-width: 60px;
+  }
+
+  .story-content {
+    flex: 1;
+  }
+
+  .story-content h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-white);
+    margin-bottom: 0.8rem;
+  }
+
+  .story-content p {
+    color: var(--color-gray);
+    line-height: 1.9;
+    font-size: 0.95rem;
+  }
+
+  .story-meta {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .story-tag {
+    padding: 0.25rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    color: var(--color-violet-light);
+    background: var(--color-card);
+    border: 1px solid var(--color-card-border);
+  }
+
+  .story-visual {
+    flex-shrink: 0;
+  }
+
+  .visual-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--gradient-button);
+    opacity: 0.3;
+    box-shadow: 0 0 30px rgba(147, 3, 197, 0.3);
+    animation: pulse 3s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.1); }
+  }
+
+  .story-cta {
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+
+  .cta-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 3rem;
+    background: var(--gradient-card);
+    border: 1px solid var(--color-card-border);
+    border-radius: 24px;
+  }
+
+  .cta-container h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-white);
+    margin-bottom: 0.8rem;
+  }
+
+  .cta-container p {
+    color: var(--color-gray);
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: var(--gradient-button);
+    color: var(--color-white);
+    border-radius: 16px;
+    font-weight: 600;
+    font-family: var(--font-main);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(147, 3, 197, 0.4);
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(147, 3, 197, 0.6);
+  }
+
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--color-card-border);
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer p {
+    color: var(--color-gray);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 768px) {
+    .story-card {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .story-number {
+      font-size: 2rem;
+    }
+
+    .story-meta {
+      justify-content: center;
+    }
+
+    .visual-circle {
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>
