@@ -2,7 +2,6 @@
 import Layout from "../layouts/Layout.astro";
 import Nav from "../components/Nav.astro";
 import IntroQuote from "../components/IntroQuote.astro";
-import PersianCalendar from "../components/PersianCalendar.astro";
 ---
 
 <Layout title="خانه">
@@ -88,12 +87,6 @@ import PersianCalendar from "../components/PersianCalendar.astro";
       </div>
     </section>
 
-    <section class="calendar-section">
-      <div class="section-container">
-        <h2 class="section-title">📅 تقویم</h2>
-        <PersianCalendar />
-      </div>
-    </section>
   </main>
 
   <footer class="footer">
@@ -432,9 +425,6 @@ import PersianCalendar from "../components/PersianCalendar.astro";
     font-size: 0.95rem;
   }
 
-  .calendar-section {
-    padding: 3rem 2rem 6rem;
-  }
 
   .footer {
     text-align: center;
