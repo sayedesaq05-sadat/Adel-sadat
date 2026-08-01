@@ -1,0 +1,224 @@
+---
+---
+
+<div class="calendar-card" id="persian-calendar"></div>
+
+<script is:inline>
+(function() {
+  var el = document.getElementById("persian-calendar");
+  if (!el) return;
+
+  function toJalali(gy, gm, gd) {
+    var g_d_m = [0,31,59,90,120,151,181,212,243,273,304,334];
+    var jy = (gy <= 1600) ? 0 : 979;
+    gy -= (gy <= 1600) ? 621 : 1600;
+    var gy2 = (gm > 2) ? (gy + 1) : gy;
+    var days = (365 * gy) + (parseInt((gy2+3)/4)) - (parseInt((gy2+99)/100)) + (parseInt((gy2+399)/400)) - 80 + gd + g_d_m[gm-1];
+    jy += 33 * (parseInt(days/12053));
+    days %= 12053;
+    jy += 4 * (parseInt(days/1461));
+    days %= 1461;
+    jy += parseInt((days-1)/365);
+    if (days > 365) days = (days-1) % 365;
+    var jm = (days < 186) ? 1 + parseInt(days/31) : 7 + parseInt((days-186)/30);
+    var jd = 1 + ((days < 186) ? (days%31) : ((days-186)%30));
+    return [jy, jm, jd];
+  }
+
+  function isLeapJalali(jy) {
+    var r = jy % 33;
+    return [1,5,9,13,17,22,26,30].indexOf(r) !== -1;
+  }
+
+  function jalaliMonthDays(jm, jy) {
+    if (jm <= 6) return 31;
+    if (jm <= 11) return 30;
+    return isLeapJalali(jy) ? 30 : 29;
+  }
+
+  function jalaliToGregorian(jy, jm, jd) {
+    var jy2 = (jy > 979) ? jy - 979 : jy;
+    var jm2 = jm - 1;
+    var jd2 = jd - 1;
+    var gy = (jy > 979) ? 1600 : 621;
+    var days = (jy2 * 365) + (parseInt(jy2/33)*8) + (parseInt((jy2%33+3)/4)) + (jm2 * 30) + (jm2 > 6 ? (jm2-6) : 0) + jd2;
+    gy += 400 * (parseInt(days/146097));
+    days %= 146097;
+    if (days > 36524) {
+      gy += 100 * (parseInt(--days/36524));
+      days %= 36524;
+      if (days >= 365) days++;
+    }
+    gy += 4 * (parseInt(days/1461));
+    days %= 1461;
+    gy += parseInt((days-1)/365);
+    if (days > 365) days = (days-1) % 365;
+    var gd = days + 1;
+    var gm = 1;
+    var g_d_m = [0,31,((gy%4===0 && gy%100!==0)||(gy%400===0))?29:28,31,30,31,30,31,31,30,31,30,31];
+    for (var i = 0; i < g_d_m.length; i++) {
+      if (gd <= g_d_m[i]) break;
+      gd -= g_d_m[i];
+      gm++;
+    }
+    return [gy, gm, gd];
+  }
+
+  var months = ["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"];
+  var weekDays = ["ش","ی","د","س","چ","پ","ج"];
+  var weekDaysFull = ["شنبه","یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنجشنبه","جمعه"];
+
+  function toPersianNum(n) {
+    var persianDigits = "۰۱۲۳۴۵۶۷۸۹";
+    return String(n).replace(/[0-9]/g, function(d) { return persianDigits[parseInt(d)]; });
+  }
+
+  var now = new Date();
+  var gYear = now.getFullYear();
+  var gMonth = now.getMonth() + 1;
+  var gDay = now.getDate();
+  var dayOfWeek = now.getDay();
+
+  var jalali = toJalali(gYear, gMonth, gDay);
+  var jYear = jalali[0];
+  var jMonth = jalali[1];
+  var jDay = jalali[2];
+
+  var persianDayOfWeek = (dayOfWeek + 1) % 7;
+
+  var monthDays = jalaliMonthDays(jMonth, jYear);
+
+  var firstDayG = jalaliToGregorian(jYear, jMonth, 1);
+  var firstDayDate = new Date(firstDayG[0], firstDayG[1]-1, firstDayG[2]);
+  var firstDayOfWeek = (firstDayDate.getDay() + 1) % 7;
+
+  var html = '';
+
+  html += '<div class="cal-header">';
+  html += '<div class="cal-month">' + months[jMonth-1] + ' ' + toPersianNum(jYear) + '</div>';
+  html += '</div>';
+
+  html += '<div class="cal-today">';
+  html += '<div class="cal-today-day">' + weekDaysFull[persianDayOfWeek] + '</div>';
+  html += '<div class="cal-today-date">' + toPersianNum(jDay) + '</div>';
+  html += '<div class="cal-today-month">' + months[jMonth-1] + '</div>';
+  html += '</div>';
+
+  html += '<div class="cal-grid">';
+  for (var w = 0; w < 7; w++) {
+    html += '<div class="cal-weekday">' + weekDays[w] + '</div>';
+  }
+
+  for (var i = 0; i < firstDayOfWeek; i++) {
+    html += '<div class="cal-day cal-empty"></div>';
+  }
+
+  for (var d = 1; d <= monthDays; d++) {
+    var isToday = (d === jDay) ? ' cal-day-today' : '';
+    html += '<div class="cal-day' + isToday + '">' + toPersianNum(d) + '</div>';
+  }
+
+  html += '</div>';
+
+  el.innerHTML = html;
+})();
+</script>
+
+<style>
+  .calendar-card {
+    background: var(--gradient-card);
+    border: 1px solid var(--color-card-border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .cal-header {
+    text-align: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--color-card-border);
+  }
+
+  .cal-month {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-violet-light);
+    font-family: var(--font-literary);
+  }
+
+  .cal-today {
+    text-align: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: rgba(147, 3, 197, 0.1);
+    border-radius: 14px;
+    border: 1px solid var(--color-card-border);
+  }
+
+  .cal-today-day {
+    font-size: 0.85rem;
+    color: var(--color-gray);
+    margin-bottom: 0.3rem;
+  }
+
+  .cal-today-date {
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+  }
+
+  .cal-today-month {
+    font-size: 0.9rem;
+    color: var(--color-violet-light);
+    margin-top: 0.2rem;
+  }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    text-align: center;
+  }
+
+  .cal-weekday {
+    font-size: 0.75rem;
+    color: var(--color-gray);
+    padding: 0.3rem;
+    font-weight: 600;
+  }
+
+  .cal-day {
+    font-size: 0.85rem;
+    color: var(--color-gray);
+    padding: 0.35rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .cal-day-today {
+    background: var(--gradient-button);
+    color: var(--color-white) !important;
+    font-weight: 700;
+    box-shadow: 0 2px 10px rgba(147, 3, 197, 0.3);
+  }
+
+  .cal-empty {
+    opacity: 0;
+  }
+
+  @media (max-width: 640px) {
+    .calendar-card {
+      max-width: 100%;
+    }
+
+    .cal-today-date {
+      font-size: 2rem;
+    }
+  }
+</style>

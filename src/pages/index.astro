@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Nav from "../components/Nav.astro";
 import IntroQuote from "../components/IntroQuote.astro";
+import PersianCalendar from "../components/PersianCalendar.astro";
 ---
 
 <Layout title="خانه">
@@ -84,6 +85,13 @@ import IntroQuote from "../components/IntroQuote.astro";
           </blockquote>
           <cite>— عادل سادات</cite>
         </div>
+      </div>
+    </section>
+
+    <section class="calendar-section">
+      <div class="section-container">
+        <h2 class="section-title">📅 تقویم</h2>
+        <PersianCalendar />
       </div>
     </section>
   </main>
@@ -192,7 +200,7 @@ import IntroQuote from "../components/IntroQuote.astro";
     font-size: 0.6em;
   }
 
-   .title-name {
+  .title-name {
     display: block;
     background: var(--gradient-text);
     -webkit-background-clip: text;
@@ -386,7 +394,7 @@ import IntroQuote from "../components/IntroQuote.astro";
   }
 
   .quote-section {
-    padding: 4rem 2rem 6rem;
+    padding: 4rem 2rem 3rem;
   }
 
   .quote-card {
@@ -422,6 +430,10 @@ import IntroQuote from "../components/IntroQuote.astro";
     color: var(--color-violet-light);
     font-style: normal;
     font-size: 0.95rem;
+  }
+
+  .calendar-section {
+    padding: 3rem 2rem 6rem;
   }
 
   .footer {
